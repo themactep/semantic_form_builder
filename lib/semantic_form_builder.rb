@@ -95,15 +95,13 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
         value_text = value
       end
       radio_button = @template.radio_button(@object_name, method, tag_value, options.merge(:object => @object, :help => help))
-      selections << boolean_field_wrapper(
-                        radio_button, "#{@object_name}_#{method.to_s}",
-                        tag_value, value_text)
+      selections << boolean_field_wrapper(radio_button, "#{@object_name}_#{method.to_s}", tag_value, value_text)
     end
-    selections    
-    field_name, label, options = field_settings(method, options)
-    semantic_group("radio", field_name, label, selections, options)    
+    selections
+    field_name, label,error_message, options = field_settings(method, options)
+    semantic_group("radio", field_name, label, selections, options)
   end
-  
+
   def check_box_group(method, values, options = {})
     selections = []
     values.each do |value|
@@ -118,11 +116,9 @@ class SemanticFormBuilder < ActionView::Helpers::FormBuilder
         value_text = value
       end
       check_box = @template.check_box(@object_name, method, options.merge(:object => @object), checked_value, unchecked_value)
-      selections << boolean_field_wrapper(
-                        check_box, "#{@object_name}_#{method.to_s}",
-                        checked_value, value_text)
+      selections << boolean_field_wrapper(check_box, "#{@object_name}_#{method.to_s}", checked_value, value_text)
     end
-    field_name, label, options = field_settings(method, options)
-    semantic_group("check-box", field_name, label, selections, options)    
+    field_name, label,error_message, options = field_settings(method, options)
+    semantic_group("check-box", field_name, label, selections, options)
   end
 end

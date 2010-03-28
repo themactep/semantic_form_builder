@@ -19,7 +19,7 @@ module SemanticFormHelper
     to_return = []
     to_return << %Q{<div class="#{type}-fields #{options[:class]}">}
     to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>}
-    to_return << %Q{<div class="input">}    
+    to_return << %Q{<div class="input">}
     to_return << fields.join
     to_return << %Q{</div></div>}
   end
@@ -46,7 +46,13 @@ module SemanticFormHelper
       selections << boolean_field_wrapper(box, name, value, text)
     end
     label = options[:label]
-    semantic_group("check-box", name, label, selections, options)    
-  end      
+    semantic_group("check-box", name, label, selections, options)
+  end
+
+  def spinner
+    content = image_tag('16x16_spinner.gif')
+    content << I18n.t('form.processing')
+    content_tag 'span', content, :style => 'display: none;', :class => 'spinner'
+  end
 
 end
