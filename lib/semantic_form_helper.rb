@@ -1,14 +1,17 @@
 module SemanticFormHelper
-      
-  def wrapping(type, field_name, label, field, options = {})
+
+  def wrapping(type, field_name, label, field, error_message, options = {})
     help = %Q{<span class="help">#{options[:help]}</span>} if options[:help]
     to_return = []
-    to_return << %Q{<div class="#{type}-field #{options[:class]}">}
-    to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>} unless ["radio","check", "submit"].include?(type)
-    to_return << %Q{<div class="input">}
+    css = %Q{#{type}-field #{options[:class]}}.strip
+    to_return << %Q{<p class="#{css}">}
+    to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>} unless %w(radio check submit).include?(type)
+    to_return << %Q{<span class="input">}
     to_return << field
-    to_return << %Q{<label for="#{field_name}">#{label}</label>} if ["radio","check"].include?(type)    
-    to_return << %Q{</div></div>}
+    to_return << %Q{<label for="#{field_name}">#{label}</label>} if %w(radio check).include?(type)
+    to_return << %Q{</span>}
+    to_return << error_message
+    to_return << %Q{</p>}
   end
 
   def semantic_group(type, field_name, label, fields, options = {})
