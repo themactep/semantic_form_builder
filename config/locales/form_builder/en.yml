@@ -1,0 +1,5 @@
+en:
+  form:
+    submit: "Submit"
+    cancel: "Cancel"
+    processing: "Sending data. Please wait..."
