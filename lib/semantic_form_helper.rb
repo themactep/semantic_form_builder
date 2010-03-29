@@ -1,33 +1,30 @@
 module SemanticFormHelper
+  include ActionView::Helpers::FormTagHelper
 
-  def wrapping(type, field_name, label, field, error_message, options = {})
-    help = %Q{<span class="help">#{options[:help]}</span>} if options[:help]
+  def wrapping(type, field_name, label_text, field, error_message, options = {})
+    label = label_tag(field_name, label_text)
+
     to_return = []
-    css = %Q{#{type}-field #{options[:class]}}.strip
-    to_return << %Q{<p class="#{css}">}
-    to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>} unless %w(radio check submit).include?(type)
-    to_return << %Q{<span class="input">}
+    to_return << label unless %w(radio check).include?(type)
     to_return << field
-    to_return << %Q{<label for="#{field_name}">#{label}</label>} if %w(radio check).include?(type)
-    to_return << %Q{</span>}
+    to_return << label if %w(radio check).include?(type)
     to_return << error_message
-    to_return << %Q{</p>}
+
+    content_tag 'p', to_return, :class => %Q{#{type}-field #{options[:class]}}.strip
   end
 
-  def semantic_group(type, field_name, label, fields, options = {})
-    help = %Q{<span class="help">#{options[:help]}</span>} if options[:help]
+  def semantic_group(type, field_name, label_text, fields, options = {})
     to_return = []
-    to_return << %Q{<div class="#{type}-fields #{options[:class]}">}
-    to_return << %Q{<label for="#{field_name}">#{label}#{help}</label>}
-    to_return << %Q{<div class="input">}
-    to_return << fields.join
-    to_return << %Q{</div></div>}
+    to_return << label_tag(field_name, label_text)
+    to_return << content_tag(:div, fields.join, :class => 'input')
+
+    content_tag 'p', to_return, :class => %Q{#{type}-fields #{options[:class]}}.strip
   end
 
-  def boolean_field_wrapper(input, name, value, text, help = nil)
+  def boolean_field_wrapper(input, name, value, label_text, help = nil)
     field = []
-    field << %Q{<label>#{input} #{text}</label>}
-    field << %Q{<div class="help">#{help}</div>} if help
+    field << label_tag(input, label_text)
+    field << content_tag('div', help, :class => 'help') if help
     field
   end
 
@@ -46,11 +43,11 @@ module SemanticFormHelper
       selections << boolean_field_wrapper(box, name, value, text)
     end
     label = options[:label]
-    semantic_group("check-box", name, label, selections, options)
+    semantic_group('check-box', name, label, selections, options)
   end
 
   def spinner
-    content = image_tag('16x16_spinner.gif')
+    content = image_tag('16x16_spinner.gif', :alt => "")
     content << I18n.t('form.processing')
     content_tag 'span', content, :style => 'display: none;', :class => 'spinner'
   end
