@@ -13,10 +13,18 @@ http://rubypond.com/articles/2008/07/16/sexy-forms-in-rails/
 
   - This plugin works better when accompanied with such goodies as
     http://github.com/cloudhead/more
+    http://github.com/aaronchi/jrails
+
+  - enable localization support in config/environment.rb, and change load_path
+    to handle locale files recursively:
+
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+    config.i18n.default_locale = :en
 
 == Installation
 
   - script/plugin install git://github.com/themactep/semantic-form-builder.git
+ 
   - rake semantic_form_builder:setup (if the installation script didn't move
     assets into corresponding directories)
 
