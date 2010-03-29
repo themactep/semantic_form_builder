@@ -1,4 +1,23 @@
-@import "_forms_palette.less";
+@black:     #000000;
+@blue:      #000099;
+@darkgray:  #444444;
+@gray:      #999999;
+@lightgray: #CCCCCC;
+@green:     #009900;
+@red:       #990000;
+@lightred:  #994444;
+@white:     #FFFFFF;
+@yellow:    #FFFFCC;
+
+.round_corners (@radius: 5px) {
+  border-radius: @radius;
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  padding: (@radius * 3);
+  margin: @radius auto;
+}
+
+@label_width: 25%;
 
 form {
   fieldset {
@@ -12,11 +31,11 @@ form {
     clear: both;
     margin: 0;
     padding: 1em 0;
-    border-bottom: 1px solid @lightgray;
+    border-bottom: 1px solid @darkgray;
 
     label {
       display: block;
-      width: 35%;
+      width: @label_width;
       float: left;
       text-align: right;
       padding-right: 2%;
@@ -37,12 +56,17 @@ form {
       font-color: @black;
       vertical-align: middle;
     }
-    input, select, textarea, select {
+    input, select, textarea {
       border: 1px inset @gray;
       padding: .25em;
+      color: @green;
+      background: @black;
+      .round_corners(3px);
     }
-    input[type=text], input[type=password], textarea {
-      width: 60%;
+    input[type=text][size="30"],
+    input[type=password],
+    textarea {
+      width: (100 - 5 - @label_width);
     }
     input[type=submit], input[type=reset], input[type=button] {
       background: @green;
@@ -65,13 +89,13 @@ form {
     }
 
     .with_error {
-      border-color: @red;
+      border-color: @yellow;
     }
 
     .form_error {
-      color: @red;
+      color: @yellow;
       display: block;
-      margin-left: 37%;
+      margin-left: (@label_width + 2);
     }
   }
   p.form-buttons {
@@ -115,4 +139,8 @@ form {
   margin-bottom: 2em;
   background: @red;
   color: @white;
+
+  p {
+    border: none;
+  }
 }
