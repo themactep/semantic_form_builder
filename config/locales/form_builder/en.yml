@@ -2,4 +2,7 @@ en:
   form:
     submit: "Submit"
     cancel: "Cancel"
+    required_mark: " <sup>*</sup>"
+    select:
+      prompt: "Choose an option..."
     processing: "Sending data. Please wait..."
