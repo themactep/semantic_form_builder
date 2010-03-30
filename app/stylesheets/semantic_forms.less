@@ -88,6 +88,23 @@ form {
       font-size: 80%;
     }
 
+    .checkboxes {
+      display: block;
+      width: (100 - 5 - @label_width);
+      max-height: 14em;
+      overflow: auto;
+      text-align:left;
+
+      label {
+        display: inline;
+        text-align: left;
+        float: none;
+        width: auto;
+        font-size: 100%;
+        cursor: pointer;
+      }
+    }
+
     .with_error {
       border-color: @yellow;
     }
